@@ -5,15 +5,43 @@ import java.util.Random;
 public class main {
     public static void main(String[] args) {
         Integer cuadrado[][] = new Integer[3][3];
-        boolean cuadradomagico = false;
-        cuadrado = random(cuadrado);
-        if(ComprobarFilas(cuadrado) && ComprobarColumnas(cuadrado) && ComprobarDiagonalUno(cuadrado) && ComprobarDiagonalDos(cuadrado)) {
-            cuadradomagico = true;
+        boolean infinito = true; //Comentar esta linea para un solo intento
+        //boolean infinito = false; //Descomentar esta linea para que se haga un solo intento
+        boolean continuar = false;
+        if (infinito) {
+            while (continuar != true) {
+                cuadrado = random(cuadrado);
+                mostrarMatriz(cuadrado);
+                continuar = imprimirResultado(cuadrado);
+            }
         }
+        else{
+                cuadrado = random(cuadrado);
+                mostrarMatriz(cuadrado);
+                continuar = imprimirResultado(cuadrado);
+            }
+        }
+
+    public static void mostrarMatriz(Integer cuadrado[][]){
         for (int i = 0; i < cuadrado.length; i++) {
             System.out.print("\n" + cuadrado[i][0] + " " + cuadrado[i][1] + " " + cuadrado[i][2]);
         }
-        System.out.println("\n" + cuadradomagico);
+    }
+    public static boolean comprobarMatriz(Integer cuadrado[][]){
+        boolean cuadradomagico = false;
+        if(ComprobarFilas(cuadrado) && ComprobarColumnas(cuadrado) && ComprobarDiagonalUno(cuadrado) && ComprobarDiagonalDos(cuadrado)) {
+            cuadradomagico = true;
+        }
+        return cuadradomagico;
+    }
+    public static boolean imprimirResultado(Integer cuadrado[][]){
+        if (comprobarMatriz(cuadrado)){
+            System.out.println("\nTu cuadrado cumple con las condiciones para ser un cuadrado magico");
+        }
+        else {
+            System.out.println("\nTu cuadrado no es magico");
+        }
+        return comprobarMatriz(cuadrado);
     }
 
     public static Integer[][] random(Integer cuadrado[][]) {
@@ -77,7 +105,7 @@ public class main {
         Boolean condicion = true;
         int suma = 0;
         for (int n = 0; n < 3; n++) {
-            suma += m[n][3 - n];
+            suma += m[n][2 - n];
         }
         if (suma != 15) {
             condicion = false;
